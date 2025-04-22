@@ -1,23 +1,29 @@
+import gdown
 import pandas as pd
+from flask import Flask, request, jsonify
 from rapidfuzz import process
 import re
-from flask import Flask, request, jsonify
+
+# File ID from Drive shareable link
+file_id = "1qf7-8R9z-AsFCQ024PRFez7QYIEbdqAl"
+url = f"https://drive.google.com/uc?id={file_id}"
+
+# Download karna
+gdown.download(url, "Food_Ingredients_and_Recipe.csv", quiet=False)
 
 # Load datasets
-food_ingredients_df = pd.read_csv("Food Ingredients and Recipe Dataset (1).csv")
+food_ingredients_df = pd.read_csv("Food_Ingredients_and_Recipe.csv")
 usda_df = pd.read_csv("cleaned_usda.csv")
 
 app = Flask(__name__)
 
 # Function to find closest match for ingredient
 def get_usda_match(ingredient, usda_df, threshold=95):
-    # Check for partial match first
     matched_rows = usda_df[usda_df['Ingredient'].str.lower().str.contains(r'\b' + re.escape(ingredient.lower()) + r'\b')]
     if not matched_rows.empty:
         print(f"Partial match found for '{ingredient}':", matched_rows.iloc[0]['Ingredient'])
         return matched_rows.iloc[0]
 
-    # Fuzzy match if no partial match found
     usda_ingredients = usda_df['Ingredient'].str.lower().tolist()
     match = process.extractOne(ingredient, usda_ingredients)
     if match and match[1] >= threshold:
@@ -27,11 +33,10 @@ def get_usda_match(ingredient, usda_df, threshold=95):
     print(f"No match found for '{ingredient}'")
     return None
 
-# Function to create recipe instructions based on ingredients
+# Function to create recipe instructions
 def create_recipe_instructions(ingredient_list):
     if not ingredient_list:
         return ["No instructions available. Please enter valid ingredients."]
-
     steps = [
         f"1. Wash and prepare the ingredients: {', '.join(ingredient_list)}.",
         f"2. Chop all ingredients and heat some oil in a pan.",
@@ -41,16 +46,14 @@ def create_recipe_instructions(ingredient_list):
     ]
     return steps
 
-# 🔥 MAIN LOGIC FUNCTION: Can be used anywhere (Flask route or manual import)
+# 🔥 MAIN LOGIC FUNCTION
 def generate_recipe_logic(ingredients, calories='', protein='', carbs='', fat=''):
     input_ingredients = [i.strip().lower() for i in ingredients.split(",")]
     default_value = 1
     matched_data = []
 
-    # Process each ingredient using USDA matching
     for ingredient in input_ingredients:
         matched = get_usda_match(ingredient, usda_df)
-
         if matched is not None:
             data = {
                 "Ingredient": matched["Ingredient"],
@@ -67,10 +70,8 @@ def generate_recipe_logic(ingredients, calories='', protein='', carbs='', fat=''
         else:
             print(f"No USDA match found for ingredient '{ingredient}'")
 
-    # User input ingredients ko dikhana hai final output mein
     user_ingredients_display = ", ".join([ing.strip() for ing in ingredients.lower().split(',')])
 
-    # Final output row - even if match not found
     if not matched_data:
         filtered_data = [{
             "Ingredient": user_ingredients_display,
@@ -84,7 +85,6 @@ def generate_recipe_logic(ingredients, calories='', protein='', carbs='', fat=''
             "Vitamins": "N/A"
         }]
     else:
-        # Ek hi row mein combine karna
         combined_data = {
             "Ingredient": user_ingredients_display,
             "Calories (kcal)": sum(d["Calories (kcal)"] for d in matched_data),
@@ -98,28 +98,23 @@ def generate_recipe_logic(ingredients, calories='', protein='', carbs='', fat=''
         }
         filtered_data = [combined_data]
 
-    # Instructions
     instructions = create_recipe_instructions([user_ingredients_display])
 
     return filtered_data, instructions
 
-# Flask Route for recipe generation
 @app.route('/generate', methods=['POST'])
 def generate_recipe():
     data = request.get_json()
     ingredients = data.get('ingredients', '')
-    target_nutrition = data.get('nutrition', {})  # Get the nutritional targets from the request
+    target_nutrition = data.get('nutrition', {})
     
-    # Extract nutrition values if provided
     calories = target_nutrition.get('calories', '')
     protein = target_nutrition.get('protein', '')
     carbs = target_nutrition.get('carbs', '')
     fat = target_nutrition.get('fat', '')
     
-    # Call the recipe generation function with nutrition parameters
     recipe, instructions = generate_recipe_logic(ingredients, calories, protein, carbs, fat)
     
-    # Prepare the response as JSON
     return jsonify({
         'recipe': recipe,
         'instructions': instructions
