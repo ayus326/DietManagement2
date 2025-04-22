@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative h-screen w-full overflow-hidden">
+
+  <!-- Background GIF -->
+  <img src="{{ url_for('static', filename='images/animation2.gif') }}"
+       alt="Background Animation"
+       class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-70">
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex justify-center items-center h-full overflow-y-auto">
+    <div class="bg-white bg-opacity-90 p-10 rounded-2xl shadow-2xl max-w-2xl w-full">
+      <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Recipe Generator</h1>
+
+      <!-- Recipe Generator Form -->
+      <form method="POST" action="/generate_recipe" class="space-y-4">
+        <div>
+          <label for="ingredients" class="block text-lg font-medium text-gray-700">Ingredients (comma-separated):</label>
+          <textarea name="ingredients" id="ingredients" rows="4" required
+                    placeholder="e.g. tomato, potato, spinach"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="calories" class="block text-sm font-medium text-gray-700">Desired Calories (kcal):</label>
+            <input type="number" name="calories" id="calories"
+                   class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+          </div>
+
+          <div>
+            <label for="protein" class="block text-sm font-medium text-gray-700">Desired Protein (g):</label>
+            <input type="number" name="protein" id="protein"
+                   class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+          </div>
+
+          <div>
+            <label for="carbs" class="block text-sm font-medium text-gray-700">Desired Carbs (g):</label>
+            <input type="number" name="carbs" id="carbs"
+                   class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+          </div>
+
+          <div>
+            <label for="fat" class="block text-sm font-medium text-gray-700">Desired Fat (g):</label>
+            <input type="number" name="fat" id="fat"
+                   class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+          </div>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+          Generate Recipe 🍽️
+        </button>
+      </form>
+
+      <!-- Recipe Display Section -->
+      {% if recipe %}
+        <div class="mt-6">
+          <h2 class="text-xl font-bold text-green-800 mb-3">Generated Recipe:</h2>
+          {% if instructions %}
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold text-gray-800">Instructions:</h3>
+            <ul class="list-decimal pl-6">
+              {% for step in instructions %}
+                <li class="text-gray-700">{{ step }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-left border border-green-400 rounded-lg">
+              <thead class="bg-green-200 text-green-900 font-semibold">
+                <tr>
+                  <th class="py-2 px-3 border border-green-300">Ingredient</th>
+                  <th class="py-2 px-3 border border-green-300">Calories</th>
+                  <th class="py-2 px-3 border border-green-300">Protein</th>
+                  <th class="py-2 px-3 border border-green-300">Carbs</th>
+                  <th class="py-2 px-3 border border-green-300">Fat</th>
+                  <th class="py-2 px-3 border border-green-300">Sugar</th>
+                  <th class="py-2 px-3 border border-green-300">Sodium</th>
+                  <th class="py-2 px-3 border border-green-300">Cholesterol</th>
+                  <th class="py-2 px-3 border border-green-300">Vitamins</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white text-gray-800">
+                {% for item in recipe %}
+                  <tr class="hover:bg-green-50 transition">
+                    <td class="py-2 px-3 border border-green-200">{{ item['Ingredient'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Calories (kcal)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Protein (g)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Carbs (g)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Fat (g)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Sugar (g)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Sodium (mg)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Cholesterol (mg)'] }}</td>
+                    <td class="py-2 px-3 border border-green-200">{{ item['Vitamins'] }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      {% else %}
+        <div class="mt-6">
+          <h2 class="text-xl font-bold text-red-500 mb-3">No recipe generated. Please check your inputs.</h2>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>

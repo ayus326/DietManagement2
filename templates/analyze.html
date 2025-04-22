@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recipe Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative h-screen w-full overflow-hidden">
+
+  <!-- Background GIF -->
+  <img src="{{ url_for('static', filename='images/animation2.gif') }}"
+       alt="Background Animation"
+       class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-70">
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex justify-center items-center h-full">
+    <div class="bg-white bg-opacity-90 p-10 rounded-2xl shadow-2xl max-w-lg w-full">
+      <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Recipe Analyzer</h1>
+      
+      <!-- Recipe Input Form -->
+      <form method="POST" action="/analyze_recipe" class="space-y-4">
+        
+        <!-- 🆕 Just-for-show Recipe Name Input (no backend use) -->
+        <input type="text" placeholder="Enter Recipe"
+               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+
+        <!-- Ingredients Textarea -->
+        <textarea name="ingredients" rows="6" placeholder="Paste your recipe or ingredients here..." required
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+        
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+          Analyze Recipe 🧪
+        </button>
+      </form>
+
+      {% if analysis %}
+        <!-- Display Nutritional Analysis -->
+        <div class="mt-6 p-4 bg-blue-100 text-blue-800 rounded-lg">
+          <h2 class="font-semibold mb-2">Nutritional Analysis:</h2>
+          
+          {% for ingredient in analysis %}
+            <div class="border-b py-2">
+              <h3 class="text-lg font-semibold">{{ ingredient.Ingredient }}</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li><strong>Calories:</strong> {{ ingredient['Calories'] }} kcal</li>
+                <li><strong>Protein:</strong> {{ ingredient['Protein'] }} g</li>
+                <li><strong>Carbs:</strong> {{ ingredient['Carbs'] }} g</li>
+                <li><strong>Fat:</strong> {{ ingredient['Fat'] }} g</li>
+                <li><strong>Sugar:</strong> {{ ingredient['Sugar'] }} g</li>
+                <li><strong>Sodium:</strong> {{ ingredient['Sodium'] }} mg</li>
+                <li><strong>Cholesterol:</strong> {{ ingredient['Cholesterol'] }} mg</li>
+                <li><strong>Vitamins:</strong> {{ ingredient['Vitamins'] }}</li>
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="mt-6 p-4 text-gray-600">
+          <p>Enter a recipe to see the nutritional analysis.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

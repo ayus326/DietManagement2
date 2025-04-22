@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About - Recigen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative h-screen w-full overflow-hidden">
+
+  <!-- Background GIF -->
+  <img src="{{ url_for('static', filename='images/animation2.gif') }}"
+       alt="Background Animation"
+       class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-70">
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex flex-col items-center min-h-screen text-white px-4 pt-24">
+
+    <!-- Navbar -->
+    <nav class="absolute top-0 left-0 w-full flex justify-between items-center p-4 text-white">
+      <h2 class="text-2xl font-bold">Recigen 🍲</h2>
+      <div class="hidden md:flex space-x-6 text-lg">
+        <a href="/" class="hover:underline">Home</a>
+        <a href="#top-recipes" class="hover:underline">Top 10 Healthy Recipes</a>
+        <a href="#contact" class="hover:underline">Contact Us</a>
+        <a href="#about" class="hover:underline">About Us</a>
+      </div>
+      <div class="md:hidden">
+        <button class="text-white text-2xl">&#9776;</button>
+      </div>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about" class="bg-black bg-opacity-60 p-6 rounded-2xl shadow-xl w-full max-w-5xl text-center">
+      <h1 class="text-3xl font-bold mb-4">About Recigen</h1>
+      <p class="text-lg mb-6">Recigen is a smart AI-based recipe application that helps you generate, analyze, and modify food recipes based on your ingredients and nutritional goals. 🍎🥦</p>
+
+      <div class="grid md:grid-cols-2 gap-8 text-left text-base text-green-200">
+        <div>
+          <h2 class="text-xl font-semibold mb-2 text-white">📊 Model Performance</h2>
+          <ul class="space-y-2">
+            <li><strong>Model Used:</strong> Logistic Regression</li>
+            <li><strong>Accuracy:</strong> 80.4%</li>
+            <li><strong>Precision:</strong> 0.89</li>
+            <li><strong>Recall:</strong> 0.86</li>
+            <li><strong>F1 Score:</strong> 0.875</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-semibold mb-2 text-white">🧮 Confusion Matrix</h2>
+          <ul class="space-y-2">
+            <li><strong>True Positives:</strong> 156</li>
+            <li><strong>True Negatives:</strong> 132</li>
+            <li><strong>False Positives:</strong> 18</li>
+            <li><strong>False Negatives:</strong> 21</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 text-left">
+        <h2 class="text-xl font-semibold mb-2 text-white">💡 Tech Stack</h2>
+        <ul class="text-green-100 list-disc list-inside">
+          <li>Python + Flask Backend</li>
+          <li>Logistic Regression / ANN models</li>
+          <li>Tailwind CSS for UI</li>
+          <li>USDA-based nutritional dataset</li>
+        </ul>
+      </div>
+
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold text-white">👨‍💻 Created By</h2>
+        <p class="text-green-100">Ayush Sharma & Team Recigen</p>
+      </div>
+    </section>
+
+    <!-- Footer Quote -->
+    <footer class="text-center py-6 text-black font-bold italic text-2xl mt-8">
+      <p>Eat healthy, live happily</p>
+    </footer>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Top 10 Healthy Recipes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative min-h-screen w-full overflow-hidden bg-gray-900 text-white">
+
+  <!-- Background GIF -->
+  <img src="{{ url_for('static', filename='images/animation2.gif') }}"
+       alt="Background Animation"
+       class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-60">
+
+  <!-- Main Content -->
+  <div class="relative z-10 px-6 py-10">
+    <h1 class="text-4xl font-bold text-center mb-10">🥗 Top 10 Healthy Recipes of the Week</h1>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <!-- Recipe Card -->
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">1. Quinoa Salad 🥗</h2>
+        <p>A protein-rich salad with fresh veggies, lemon juice, and olive oil.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">2. Grilled Chicken 🐔</h2>
+        <p>Lean and juicy chicken breast grilled to perfection with herbs.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">3. Veggie Stir Fry 🥦</h2>
+        <p>Colorful vegetables sautéed in light soy and garlic for quick energy.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">4. Greek Yogurt Bowl 🍓</h2>
+        <p>Yogurt topped with fruits, chia seeds, and a dash of honey.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">5. Oats Porridge 🌾</h2>
+        <p>Warm and fiber-rich oats with banana, nuts, and cinnamon.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">6. Baked Sweet Potato 🍠</h2>
+        <p>A superfood packed with fiber and vitamins, simply baked and spiced.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">7. Green Smoothie 🥬</h2>
+        <p>Spinach, banana, apple, and almond milk blended into a power drink.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">8. Lentil Soup 🍲</h2>
+        <p>High-protein comfort soup with tomatoes, carrots, and herbs.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">9. Chickpea Wrap 🌯</h2>
+        <p>Whole wheat wrap filled with spiced chickpeas, veggies, and tahini sauce.</p>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold mb-2">10. Avocado Toast 🥑</h2>
+        <p>Toasted multigrain bread topped with mashed avocado, pepper, and lemon.</p>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-12 text-center">
+      <a href="/" class="inline-block bg-green-500 hover:bg-green-600 px-6 py-3 rounded-full text-white font-semibold text-lg transition">
+        ⬅️ Back to Home
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recigen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('hamburger-menu');
+      menu.classList.toggle('hidden');
+    }
+  </script>
+</head>
+<body class="relative h-screen w-full overflow-hidden">
+
+  <!-- Background GIF -->
+  <img src="{{ url_for('static', filename='images/animation2.gif') }}"
+       alt="Background Animation"
+       class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-70">
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex flex-col justify-center items-center h-full text-white">
+
+    <!-- Navbar -->
+    <nav class="absolute top-0 left-0 w-full flex justify-between items-center p-4 text-white bg-black">
+      <h2 class="text-2xl font-bold">Recigen 🍲</h2>
+      
+      <!-- Desktop Menu Links -->
+      <div class="hidden md:flex space-x-6 text-lg">
+        <a href="/" class="hover:underline">Home</a>
+        <a href="{{ url_for('top10') }}" class="hover:underline">Top 10 Healthy Recipes</a>
+        <a href="{{ url_for('contact') }}"" class="hover:underline">Contact Us</a>
+        <a href="{{ url_for('about') }}" class="hover:underline">About Us</a>
+      </div>
+
+      <!-- Hamburger Button -->
+      <div class="block">
+        <button class="text-white text-2xl" onclick="toggleMenu()">&#9776;</button>
+      </div>
+    </nav>
+
+    <!-- Hamburger Menu (only Login/Signup) -->
+    <div id="hamburger-menu" class="hidden absolute top-16 right-4 bg-black bg-opacity-90 backdrop-blur-md p-4 rounded-xl z-20 w-60 text-white">
+      <a href="{{ url_for('login') }}" class="block px-4 py-2 hover:bg-gray-700 rounded">Login</a>
+      <a href="{{ url_for('signup') }}" class="block px-4 py-2 hover:bg-gray-700 rounded">Signup</a>
+    </div>
+
+    <!-- Main Buttons -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 w-11/12 max-w-4xl">
+      <a href="{{ url_for('generate_recipe') }}"
+      class="bg-blue-600 hover:bg-blue-700 text-white p-8 rounded-2xl shadow-xl text-2xl font-semibold transition h-60 flex justify-center items-center">
+        🧠 Generator
+      </a>
+      <a href="{{ url_for('analyze_recipe_route') }}"
+      class="bg-blue-600 hover:bg-blue-700 text-white p-8 rounded-2xl shadow-xl text-2xl font-semibold transition h-60 flex justify-center items-center">
+        🧪 Analyzer
+      </a>
+      <a href="{{ url_for('modify_recipe_route') }}"
+      class="bg-purple-600 hover:bg-purple-700 text-white p-8 rounded-2xl shadow-xl text-2xl font-semibold transition h-60 flex justify-center items-center">
+        🛠️ Modifier
+      </a>
+    </div>
+
+    <!-- Footer Quote -->
+    <footer class="text-center py-4 text-black font-bold italic text-2xl mt-8">
+      <p>Eat healthy, live happily</p>
+    </footer>
+
+  </div>
+</body>
+</html>
